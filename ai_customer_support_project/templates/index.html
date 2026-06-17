@@ -1,0 +1,88 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Support & Review Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Customer Support Assistant</h1>
+            <p>Интеллектуальная обработка отзывов, классификация проблем и генерация ответов</p>
+        </header>
+
+        <div class="main-grid">
+            <!-- Левая колонка: Ввод и результаты -->
+            <div class="left-panel">
+                <div class="card">
+                    <h2>Обработать новый отзыв</h2>
+                    <form method="POST" action="/">
+                        <textarea name="review_text" placeholder="Вставьте текст отзыва на английском (например: 'The phone arrived damaged and the screen is broken...')" required></textarea>
+                        <button type="submit">Анализировать отзыв</button>
+                    </form>
+                </div>
+
+                {% if result %}
+                <div class="card result-card">
+                    <h2>Результаты анализа</h2>
+                    <div class="insight-item"><strong>Текст:</strong> "{{ result.review }}"</div>
+                    <div class="insight-meta">
+                        <div><strong>Категория:</strong> <span class="badge badge-cat">{{ result.category }}</span></div>
+                        <div><strong>Тональность (ML):</strong> {{ result.sentiment }}</div>
+                    </div>
+                    <div class="response-box">
+                        <strong>Автоматический ответ поддержки:</strong>
+                        <p>{{ result.response }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Правая колонка: Статистика и логи -->
+            <div class="right-panel">
+                <div class="card">
+                    <h2>Дашборд распределения проблем</h2>
+                    <div class="stats-grid">
+                        {% if stats %}
+                            {% for row in stats %}
+                            <div class="stat-pill">
+                                <strong>{{ row['predicted_category'] }}</strong>: {{ row['count'] }}
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-text">Статистика пока пуста. Отправьте первый отзыв!</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>История запросов (SQLite)</h2>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Отзыв</th>
+                                    <th>Категория</th>
+                                    <th>Тональность</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in history %}
+                                <tr>
+                                    <td class="text-truncate">{{ item['review_text'] }}</td>
+                                    <td><span class="badge">{{ item['predicted_category'] }}</span></td>
+                                    <td>{{ item['sentiment'] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
