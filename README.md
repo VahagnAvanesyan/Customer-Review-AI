@@ -78,15 +78,15 @@ python app.py
 📸 Screenshot Section
 
 
-📌 Future Improvements
+## 📌 Future Improvements
 Add database support
 Improve AI model accuracy
 Deploy to cloud (Render / Vercel / Railway)
 Add user authentication
 
-👨‍💻 Author
+## 👨‍💻 Author
 Made by VahagnAvanesyan - https://github.com/VahagnAvanesyan
 
-⭐ If you like this project
+## ⭐ If you like this project
 
 Give it a star ⭐ on GitHub
