@@ -76,7 +76,7 @@ pip install -r requirements.txt
 # 6. Run project
 python app.py
 📸 Screenshot Section
-
+```
 
 ## 📌 Future Improvements
 Add database support
